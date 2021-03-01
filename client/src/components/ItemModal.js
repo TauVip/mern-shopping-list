@@ -11,7 +11,6 @@ import {
   ModalHeader
 } from 'reactstrap'
 import { addItem } from '../actions/itemActions'
-import { v4 } from 'uuid'
 
 class ItemModal extends Component {
   state = {
@@ -33,7 +32,6 @@ class ItemModal extends Component {
     e.preventDefault()
 
     const newItem = {
-      id: v4(),
       name: this.state.name
     }
 
@@ -48,8 +46,7 @@ class ItemModal extends Component {
         <Button
           color='dark'
           style={{ marginBottom: '2rem' }}
-          onClick={this.toggle}
-        >
+          onClick={this.toggle}>
           Add Item
         </Button>
 
