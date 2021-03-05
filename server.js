@@ -1,22 +1,25 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
 const path = require('path')
-
-const items = require('./routes/api/items')
+const config = require('config')
 
 const app = express()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
-const db = require('./config/keys').mongoURI
+const db = config.get('mongoURI')
 
 mongoose
-  .connect(db)
+  .connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  })
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err))
 
-app.use('/api/items', items)
+app.use('/api/items', require('./routes/api/items'))
+app.use('/api/users', require('./routes/api/users'))
+app.use('/api/auth', require('./routes/api/auth'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
@@ -30,4 +33,4 @@ const port = process.env.PORT || 5000
 
 app.listen(port, () => console.log(`Server started on port ${port}`))
 
-// Learn The MERN Stack [8] - Prepare & Deploy | 4:26
+// Learn The Mern Stack [12] - React Login & Access Control | 8:31

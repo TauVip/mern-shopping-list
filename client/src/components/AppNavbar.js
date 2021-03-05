@@ -6,9 +6,13 @@ import {
   Navbar,
   NavbarBrand,
   NavbarToggler,
-  NavItem,
-  NavLink
+  NavItem
 } from 'reactstrap'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import LoginModal from './auth/LoginModal'
+import { Logout } from './auth/Logout'
+import RegisterModal from './auth/RegisterModal'
 
 class AppNavbar extends Component {
   state = {
@@ -31,9 +35,13 @@ class AppNavbar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className='ml-auto' navbar>
                 <NavItem>
-                  <NavLink href='https://github.com/bradtraversy'>
-                    Github
-                  </NavLink>
+                  <RegisterModal />
+                </NavItem>
+                <NavItem>
+                  <LoginModal />
+                </NavItem>
+                <NavItem>
+                  <Logout />
                 </NavItem>
               </Nav>
             </Collapse>
@@ -44,4 +52,8 @@ class AppNavbar extends Component {
   }
 }
 
-export default AppNavbar
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, null)(AppNavbar)
